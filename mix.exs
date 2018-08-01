@@ -24,7 +24,7 @@ defmodule ArcAliyunOss.MixProject do
 
   defp deps do
     [
-      {:alixir_oss, "~ 0.1.0", git: "https://github.com/GreenNerd-Labs/alixir_oss", branch: "develop"}
+      {:alixir_oss, "~> 0.1.0", git: "https://github.com/GreenNerd-Labs/alixir_oss", branch: "develop"}
     ]
   end
 

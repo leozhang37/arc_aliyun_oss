@@ -25,8 +25,7 @@ defmodule ArcAliyunOss.MixProject do
   defp deps do
     [
       {:alixir_oss, "~> 0.1.1"},
-      {:arc, "~> 0.10.0"},
-      {:httpoison, "~> 1.0", override: true}
+      {:arc, "~> 0.10.0"}
     ]
   end
 
@@ -37,7 +36,7 @@ defmodule ArcAliyunOss.MixProject do
   defp package do
     [
       name: :arc_aliyun_oss,
-      files: ["lib", "mix.exs", "README", "MIT-LICENSE"],
+      files: ["lib", "mix.exs", "README.md", "MIT-LICENSE"],
       maintainers: ["CptBreeza"],
       licenses: ["MIT"],
       links: %{"GitHub" => @project_host}

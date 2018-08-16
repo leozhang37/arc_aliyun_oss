@@ -67,7 +67,7 @@ defmodule Arc.Storage.AliyunOSS do
     case result do
       {:ok, 200, _} -> {:ok, file.file_name}
       {:ok, _, message} -> {:error, to_string(message)}
-      {:error, _, error} -> {:error, error}
+      {:error, reason} -> {:error, reason}
     end
   end
 

@@ -37,7 +37,7 @@ defmodule ArcAliyunOss.MixProject do
   defp package do
     [
       name: :arc_aliyun_oss,
-      files: ["libs", "mix.exs", "README", "MIT-LICENSE"],
+      files: ["lib", "mix.exs", "README", "MIT-LICENSE"],
       maintainers: ["CptBreeza"],
       licenses: ["MIT"],
       links: %{"GitHub" => @project_host}

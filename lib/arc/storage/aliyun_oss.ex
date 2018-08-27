@@ -49,7 +49,7 @@ defmodule Arc.Storage.AliyunOSS do
       object_key: alioss_key(definition, version, file_and_scope)
     }
 
-    OSS.presigned_url(:get, file)
+    OSS.presigned_url(:get, file, options)
   end
 
   def delete(definition, version, file_and_scope) do

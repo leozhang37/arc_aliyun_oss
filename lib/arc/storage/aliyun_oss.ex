@@ -7,6 +7,10 @@ defmodule Arc.Storage.AliyunOSS do
 
   @default_expire_time 60*5
 
+  alias Alixir.OSS
+  alias Alixir.OSS.Env
+  alias Alixir.OSS.FileObject
+
   def put(definition, version, {file, scope}) do
     destination_dir = definition.storage_dir(version, {file, scope})
 
@@ -20,10 +24,10 @@ defmodule Arc.Storage.AliyunOSS do
 
   # Put binary file in memory
   defp do_put(%Arc.File{binary: file_binary}, {alioss_bucket, alioss_key}) when is_binary(file_binary),
-    do: Alixir.OSS.put_object(alioss_bucket, alioss_key, file_binary) |> Alixir.request
+    do: OSS.put_object(%FileObject{bucket: alioss_bucket, object_key: alioss_key, object: file_binary}) |> Alixir.request
   # Put file stored in disk
   defp do_put(%Arc.File{path: path}, {alioss_bucket, alioss_key}),
-    do: Alixir.OSS.put_object(alioss_bucket, alioss_key, File.read!(path)) |> Alixir.request
+    do: OSS.put_object(%FileObject{bucket: alioss_bucket, object_key: alioss_key, object: File.read!(path)}) |> Alixir.request
 
   def url(definition, version, file_and_scope, options \\ []) do
     case Keyword.get(options, :signed, false) do
@@ -40,23 +44,21 @@ defmodule Arc.Storage.AliyunOSS do
   end
 
   defp build_signed_url(definition, version, file_and_scope, options) do
-    alioss_key = alioss_key(definition, version, file_and_scope)
-    url = definition |> host |> Path.join(alioss_key) |> URI.encode
+    file = %FileObject{
+      bucket: definition.bucket(),
+      object_key: alioss_key(definition, version, file_and_scope)
+    }
 
-    now = DateTime.utc_now |> DateTime.to_unix
-    expires = now + (Keyword.get(options, :expire_in) || @default_expire_time)
-    string_to_sign = "GET\n\n\n#{expires}\n/#{Path.join(definition.bucket(), alioss_key)}"
-    signature = string_to_sign |> sign_string
-    parameters = %{"Signature" => signature, "Expires" => expires, "OSSAccessKeyId" => Alixir.OSS.Env.oss_access_key_id}
-
-    "#{url}?#{URI.encode_query(parameters)}"
+    OSS.presigned_url(:get, file)
   end
 
   def delete(definition, version, file_and_scope) do
-    definition
-    |> alioss_bucket
-    |> Alixir.OSS.delete_object(alioss_key(definition, version, file_and_scope))
-    |> Alixir.request
+    %FileObject{
+      bucket: alioss_bucket(definition),
+      object_key: alioss_key(definition, version, file_and_scope)
+    }
+    |> OSS.delete_object()
+    |> Alixir.request()
 
     :ok
   end
@@ -71,10 +73,6 @@ defmodule Arc.Storage.AliyunOSS do
     end
   end
 
-  defp sign_string(string) do
-    :crypto.hmac(:sha, Alixir.OSS.Env.oss_access_key_secret, string) |> Base.encode64
-  end
-
   defp alioss_key(definition, version, file_and_scope) do
     Path.join([
       definition.storage_dir(version, file_and_scope),
@@ -85,7 +83,7 @@ defmodule Arc.Storage.AliyunOSS do
   defp host(definition) do
     # FIXME
     # Support only https at present
-    "https://#{alioss_bucket(definition)}.#{Alixir.OSS.Env.oss_endpoint}"
+    "https://#{alioss_bucket(definition)}.#{Env.oss_endpoint}"
   end
 
   defp alioss_bucket(definition) do

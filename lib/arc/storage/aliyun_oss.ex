@@ -11,6 +11,10 @@ defmodule Arc.Storage.AliyunOSS do
   alias Alixir.OSS.Env
   alias Alixir.OSS.FileObject
 
+  #
+  # Put Object
+  #
+
   def put(definition, version, {file, scope}) do
     destination_dir = definition.storage_dir(version, {file, scope})
 
@@ -29,6 +33,19 @@ defmodule Arc.Storage.AliyunOSS do
   defp do_put(%Arc.File{path: path}, {alioss_bucket, alioss_key}),
     do: OSS.put_object(%FileObject{bucket: alioss_bucket, object_key: alioss_key, object: File.read!(path)}) |> Alixir.request
 
+  def presigned_put_url(definition, file_and_scope) do
+    file = %FileObject{
+      bucket: alioss_bucket(definition),
+      object_key: alioss_key(definition, nil, file_and_scope)
+    }
+
+    OSS.presigned_url(:put, file, expires: @default_expire_time)
+  end
+
+  #
+  # Get Object
+  #
+
   def url(definition, version, file_and_scope, options \\ []) do
     case Keyword.get(options, :signed, false) do
       false -> build_url(definition, version, file_and_scope, options)
@@ -45,12 +62,16 @@ defmodule Arc.Storage.AliyunOSS do
 
   defp build_signed_url(definition, version, file_and_scope, options) do
     file = %FileObject{
-      bucket: definition.bucket(),
+      bucket: alioss_bucket(definition),
       object_key: alioss_key(definition, version, file_and_scope)
     }
 
     OSS.presigned_url(:get, file, options)
   end
+
+  #
+  # Delete Object
+  #
 
   def delete(definition, version, file_and_scope) do
     %FileObject{
@@ -63,7 +84,9 @@ defmodule Arc.Storage.AliyunOSS do
     :ok
   end
 
-  # helper funcitons
+  #
+  # Helper Funcitons
+  #
 
   defp handle_common_results(result, file) do
     case result do

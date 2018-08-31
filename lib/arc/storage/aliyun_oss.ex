@@ -85,6 +85,26 @@ defmodule Arc.Storage.AliyunOSS do
   end
 
   #
+  # Post Object Data
+  #
+
+  def post_object_auth_data(%{} = raw_data, policy) do
+    %{
+      "OSSAccessKeyId": Env.oss_access_key_id(),
+      "Signature": Alixir.Utils.sign(policy, Env.oss_access_key_secret())
+    }
+    |> Map.merge(raw_data)
+  end
+
+  def post_object_url(%{bucket: bucket}) do
+    %URI{
+      scheme: "https",
+      host: bucket <> "." <> Env.oss_endpoint()
+    }
+    |> URI.to_string()
+  end
+
+  #
   # Helper Funcitons
   #
 

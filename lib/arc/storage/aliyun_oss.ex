@@ -111,7 +111,7 @@ defmodule Arc.Storage.AliyunOSS do
     result =
       bucket
       |> OSS.head_object(key)
-      |> OSS.request()
+      |> Alixir.request()
 
     case result do
       {:ok, 200, _} -> true

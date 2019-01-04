@@ -105,6 +105,22 @@ defmodule Arc.Storage.AliyunOSS do
   end
 
   #
+  # Head Object
+  #
+  def head(%{bucket: bucket, key: key}) do
+    result =
+      bucket
+      |> OSS.head_object(key)
+      |> OSS.request()
+
+    case result do
+      {:ok, 200, _} -> true
+      {:ok, _, _} -> false
+      _ -> false
+    end
+  end
+
+  #
   # Helper Funcitons
   #
 

@@ -1,6 +1,6 @@
 %{
   "alixir_core": {:hex, :alixir_core, "0.1.3", "7a58447339a594815d1c145fdabeea3a22c30e00cedc00af53e20440dee78bd4", [:mix], [{:elixir_uuid, "~> 1.2", [hex: :elixir_uuid, repo: "hexpm", optional: false]}, {:httpoison, "~> 1.2.0", [hex: :httpoison, repo: "hexpm", optional: false]}, {:timex, "~> 3.3", [hex: :timex, repo: "hexpm", optional: false]}], "hexpm"},
-  "alixir_oss": {:git, "https://github.com/GreenNerd-Labs/alixir_oss.git", "2a176fbcda519f00d949aac4e36df0bfe02c000e", [branch: "develop"]},
+  "alixir_oss": {:git, "https://github.com/GreenNerd-Labs/alixir_oss.git", "977a709faa1ee588f3e9a978a141151dd440000f", [branch: "develop"]},
   "arc": {:hex, :arc, "0.10.0", "b2a5dbe4e684c27ce231e2228ea2cc640420eab91dbe6e27b5ed1016a8a39975", [:mix], [{:ex_aws, "~> 2.0", [hex: :ex_aws, repo: "hexpm", optional: true]}, {:ex_aws_s3, "~> 2.0", [hex: :ex_aws_s3, repo: "hexpm", optional: true]}, {:httpoison, "~> 0.13", [hex: :httpoison, repo: "hexpm", optional: false]}, {:poison, "~> 2.2 or ~> 3.1", [hex: :poison, repo: "hexpm", optional: true]}, {:sweet_xml, "~> 0.6", [hex: :sweet_xml, repo: "hexpm", optional: true]}], "hexpm"},
   "certifi": {:hex, :certifi, "2.4.2", "75424ff0f3baaccfd34b1214184b6ef616d89e420b258bb0a5ea7d7bc628f7f0", [:rebar3], [{:parse_trans, "~>3.3", [hex: :parse_trans, repo: "hexpm", optional: false]}], "hexpm"},
   "combine": {:hex, :combine, "0.10.0", "eff8224eeb56498a2af13011d142c5e7997a80c8f5b97c499f84c841032e429f", [:mix], [], "hexpm"},

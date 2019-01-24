@@ -24,9 +24,9 @@ defmodule ArcAliyunOss.MixProject do
 
   defp deps do
     [
-      {:alixir_oss, github: "https://github.com/leozhang37/alixir_oss.git", branch: "develop"},
+      {:alixir_oss, git: "https://github.com/leozhang37/alixir_oss.git", branch: "develop"},
       {:arc, "~> 0.10.0"},
-      {:ex_arc, "~> 0.0.1", github: "https://github.com/leozhang37/ex_arc.git", branch: "develop"},
+      {:ex_arc, "~> 0.0.1", git: "https://github.com/leozhang37/ex_arc.git", branch: "develop"},
       {:httpoison, "~> 1.2.0", override: true}
     ]
   end

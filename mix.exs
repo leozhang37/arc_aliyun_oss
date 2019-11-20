@@ -2,7 +2,7 @@ defmodule ArcAliyunOss.MixProject do
   use Mix.Project
 
   @project_host "https://github.com/GreenNerd-Labs/arc_aliyun_oss"
-  @version "0.2.0"
+  @version "0.2.1"
 
   def project do
     [
@@ -24,7 +24,7 @@ defmodule ArcAliyunOss.MixProject do
 
   defp deps do
     [
-      {:alixir_oss, git: "https://github.com/leozhang37/alixir_oss.git", branch: "develop"},
+      {:alixir_oss, git: "https://github.com/leozhang37/alixir_oss.git", branch: "v0.2.1"},
       {:arc, "~> 0.11.0"},
       {:ex_arc, "~> 0.0.1", git: "https://github.com/leozhang37/ex_arc.git", branch: "develop"},
       {:httpoison, "~> 1.5.0"}
